@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101a2c">
+  <title>Cognit | Learn what you know</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand"><span class="logo">C</span><div><strong>cognit<span class="period">.</span></strong><small>Evidence of understanding</small></div></div>
+      <div class="toplinks"><span class="proto">HACKATHON PROTOTYPE</span><button id="studentTab" class="tab active">Student view</button><button id="teacherTab" class="tab">Teacher view</button></div>
+    </header>
+    <div class="banner"><span class="dot"></span> <b>Transparent assessment:</b> Code runs in your browser. Test evidence is not tamper-proof. AI grading is provisional and can be reviewed by a teacher.</div>
+    <section id="welcome" class="welcome">
+      <div class="welcome-copy"><p class="eyebrow">AI-ASSISTED ASSESSMENT, NOT AI-GENERATED ANSWERS</p><h1>Show what you understand.</h1><p>Write Python, receive measured feedback and show what you can do independently after guided help.</p>
+        <form id="startForm"><label for="alias">Student alias</label><div class="join"><input id="alias" maxlength="60" required value="Demo Student" autocomplete="off"><button type="submit" class="primary">Start assessment <span>→</span></button></div></form>
+        <p class="small">Four short tasks. Three skill categories. No real student accounts or production exam security.</p>
+      </div>
+      <div class="welcome-card"><span class="eyebrow">WHAT WE MEASURE</span><div class="measure"><strong>50%</strong><span>Functional correctness</span></div><div class="measure"><strong>20%</strong><span>Edge-case handling</span></div><div class="measure"><strong>30%</strong><span>Conceptual explanation</span></div><hr><p>Your independent transfer attempts provide evidence beyond a single passing submission.</p></div>
+    </section>
+    <main id="workspace" class="workspace hidden">
+      <section id="studentView" class="student-view">
+        <div class="overview"><div><p class="eyebrow">ASSESSMENT WORKSPACE</p><h1 id="questionTitle">Python assessment</h1><p id="questionMeta" class="muted">Loading question…</p></div><div class="progress-wrap"><span id="progressLabel">Question 1 of 4</span><div class="progress-track"><div id="progressFill"></div></div></div></div>
+        <div class="student-grid">
+          <div class="main-col">
+            <div class="panel problem"><div class="panel-head"><h2>Problem</h2><span id="skillTag" class="tag">loops</span></div><p id="statement"></p><h3>Expected function</h3><pre id="signature" class="signature"></pre><h3>Example inputs</h3><div id="examples" class="examples"></div></div>
+            <div class="panel code-panel"><div class="panel-head"><h2>Python editor</h2><span class="tool-label">Monaco · Browser Pyodide</span></div><div id="editor" class="editor"><textarea id="fallbackEditor" spellcheck="false" aria-label="Python code editor"></textarea></div>
+              <div class="controls"><button class="secondary" id="runBtn">▶ Run code</button><button class="primary" id="submitBtn">Submit for assessment</button><span id="runnerStatus" class="muted">Python runtime not loaded</span></div>
+              <div class="results" aria-live="polite"><div class="section-heading"><h3>Test output</h3><span id="testStats">Not run yet</span></div><div id="testOutput" class="console">Run your code to see test results and exceptions.</div></div>
+            </div>
+            <div class="panel explain"><div class="panel-head"><h2>Explain your reasoning</h2><span class="tag gold">30 points</span></div><p class="muted">What idea did you use, why does it work, what is the time complexity and which edge cases matter?</p><textarea id="explanation" placeholder="My approach is…" rows="4"></textarea><div id="scoreCard" class="score-card hidden"></div><div class="controls"><button id="nextBtn" class="primary hidden">Continue to next question →</button></div></div>
+          </div>
+          <aside class="side-col"><div class="panel help"><div class="panel-head"><h2>Learning assistant</h2><span class="tag">Bounded help</span></div><p class="muted">The assistant can point you towards concepts, but cannot solve the active task.</p>
+            <div class="mode-tabs"><button data-mode="lookup" class="selected">Reference</button><button data-mode="plan">Plan Mode</button><button data-mode="hint">Hint</button></div>
+            <div id="helpRules" class="hint-rules">Plan Mode and hints unlock after your first submitted attempt.</div><textarea id="helpQuery" rows="3" placeholder="How do I use a Python set?"></textarea><button id="askBtn" class="secondary full">Ask for help →</button><div id="helpResponse" class="assistant-response">Approved documentation includes Python's official tutorial and standard library reference.</div>
+            <div id="docLinks"></div><div id="planDraftBox" class="hidden"><h3>Your own plan</h3><textarea id="planDraft" rows="4" placeholder="Write your own outline here. The assistant should not write it for you."></textarea><button id="usePlanBtn" class="secondary full">Save plan for next submission</button><p id="planSaved" class="small"></p></div></div>
+            <div class="panel side-card"><p class="eyebrow">SCORING</p><div class="score-line"><span>Core tests</span><b>50 points</b></div><div class="score-line"><span>Edge cases</span><b>20 points</b></div><div class="score-line"><span>Explanation</span><b>30 points</b></div><p class="small">Difficulty weights: easy ×1, medium ×1.5, hard ×2.</p></div>
+          </aside>
+        </div>
+      </section>
+      <section id="teacherView" class="teacher-view hidden"><div class="overview"><div><p class="eyebrow">EVIDENCE DASHBOARD</p><h1>Teacher review</h1><p class="muted">Real saved results from this demo session. Concept scores are provisional.</p></div><button id="refreshTeacher" class="secondary">Refresh results ↻</button></div>
+        <div id="teacherEmpty" class="panel teacher-empty">Start a student session to see a dashboard.</div><div id="teacherContent" class="hidden">
+        <div class="metrics"><div class="metric"><small>Weighted score</small><strong id="weightedScore">0%</strong></div><div class="metric"><small>Attempt submissions</small><strong id="attemptCount">0</strong></div><div class="metric"><small>Assisted attempts</small><strong id="assistedCount">0</strong></div><div class="metric"><small>Independent attempts</small><strong id="independentCount">0</strong></div></div>
+        <div class="teacher-grid"><div class="panel"><h2>Assessment evidence</h2><div id="attemptList"></div></div><div class="panel"><h2>Mastery signals</h2><p class="muted">Heuristics only. Not a psychometric measure or cheating detector.</p><div id="masteryList"></div><h3>Help history</h3><div id="helpHistory"></div></div></div>
+        </div>
+      </section>
+    </main>
+    <footer><strong>cognit.</strong> Prototype built for Imperial AI Hackathon 2026 · No student authentication · Do not use for formal examinations</footer>
+  </div>
+  <script src="/static/app.js" type="module"></script>
+</body>
+</html>
